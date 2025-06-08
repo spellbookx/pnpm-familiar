@@ -1,0 +1,39 @@
+name: "pnpm familiar"
+description: "A GitHub Action that conjures a fully cached, version-aligned pnpm environment — your reliable familiar for fast, reproducible CI pipelines"
+author: "Davide Di Criscito (@ctrlmaniac) @spellbookx"
+branding:
+  icon: "zap"
+  color: "blue"
+
+inputs:
+  skip-build:
+    description: "If true, skips 'pnpm build'"
+    required: false
+    default: "false"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: pnpm/action-setup@v4
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: ".nvmrc"
+        cache: "pnpm"
+
+    - name: Verify pnpm version
+      run: pnpm -v
+      shell: bash
+
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+      shell: bash
+      env:
+        NODE_ENV: "ci"
+
+    - name: Build project
+      if: inputs.skip-build != 'true'
+      run: pnpm build
+      shell: bash
+      env:
+        NODE_ENV: "ci"
