@@ -1,0 +1,23 @@
+name: Float v1 tag on release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update-floating-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Move v1 tag to latest release
+        run: |
+          git fetch --tags
+          git tag -f v1 ${{ github.event.release.tag_name }}
+          git push origin v1 --force
