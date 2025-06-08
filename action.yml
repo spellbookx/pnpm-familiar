@@ -1,5 +1,5 @@
 name: "pnpm familiar"
-description: "A GitHub Action that conjures a fully cached, version-aligned pnpm environment — your reliable familiar for fast, reproducible CI pipelines"
+description: "A GitHub Action that conjures a fully cached, version-aligned pnpm environment"
 author: "Davide Di Criscito (@ctrlmaniac) @spellbookx"
 branding:
   icon: "zap"
